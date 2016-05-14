@@ -8,9 +8,10 @@ services:
     ports:
       - 3000:3000
     environment:
-      TOY_APP_DB_USER: user
-      TOY_APP_DB_PASSWORD: password
-      TOY_APP_DB_NAME: database
+      SAMPLE_APP_DB_HOST: postgres
+      SAMPLE_APP_DB_USER: user
+      SAMPLE_APP_DB_PASSWORD: password
+      SAMPLE_APP_DB_NAME: database
   postgres:
     image: postgres:9.5.2
     ports:

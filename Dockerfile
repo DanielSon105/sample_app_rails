@@ -4,7 +4,17 @@
 #   docker-compose build app
 # boostrap rails app (select no when asked Overwrite /usr/src/app/Gemfile?)
 #   docker-compose run --user "1000:$(id -g)" app rails new --skip-bundle .
-
+# reconfigure database.yml settings
+#   chanage sqlite3 to postgresql
+#   host:     <%= ENV['SAMPLE_APP_DB_HOST'] || 'localhost' %>
+#   port:     <%= ENV['SAMPLE_APP_DB_PORT'] || '5432' %>
+#   database: <%= ENV['SAMPLE_APP_DB_NAME'] %>
+#   username: <%= ENV['SAMPLE_APP_DB_USER'] %>
+#   password: <%= ENV['SAMPLE_APP_DB_PASSWORD'] %>
+#   remove database options for sqlite3 in all environments
+# rename docker-compose.yml environment settings
+#   e.g. TOY_APP_DB_HOST: --> SAMPLE_APP_DB_HOST:
+# docker-compose up
 
 # base image
 FROM ruby:2.3
