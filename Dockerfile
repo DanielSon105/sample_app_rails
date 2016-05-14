@@ -27,16 +27,16 @@ RUN set -ex \
 
 #  throw errors if Gemfile has been modified since Gemfile.lock
 # comment out while bootstrapping app
-RUN bundle config --global frozen 1
+#RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # install required gems from gemfile
 # comment out while bootstrapping app
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
-RUN bundle install
+#COPY Gemfile /usr/src/app/
+#COPY Gemfile.lock /usr/src/app/
+#RUN bundle install
 
 # copy the code
 COPY . /usr/src/app
