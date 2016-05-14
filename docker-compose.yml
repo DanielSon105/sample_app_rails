@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 3000:3000
+    environment:
+      TOY_APP_DB_USER: user
+      TOY_APP_DB_PASSWORD: password
+      TOY_APP_DB_NAME: database
+  postgres:
+    image: postgres:9.5.2
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.pgdata:/var/lib/postgresql
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
