@@ -5,6 +5,7 @@ services:
     build: .
     volumes:
       - .:/usr/src/app
+      - ./.bundle:/usr/local/bundle
     ports:
       - 3000:3000
     environment:
