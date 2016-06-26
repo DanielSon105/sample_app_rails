@@ -8,6 +8,8 @@ services:
       - bundle_data:/usr/local/bundle
     ports:
       - 3000:3000
+    depends_on:
+      - postgres
     environment:
       SAMPLE_APP_DB_HOST: postgres
       SAMPLE_APP_DB_USER: user
