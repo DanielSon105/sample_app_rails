@@ -10,6 +10,11 @@ check_group() {
     group=$(getent group "$target_gid" | cut -d: -f1)
     usermod -g "$group" worker
   fi
+
+  target_uid=$(stat -c "%u" "$1")
+  if [ "$(grep "$target_uid" -c /etc/passwd)" -eq "0" ]; then
+    usermod -u "$target_uid" worker
+  fi
 }
 
 # environment specific configuration
@@ -29,8 +34,8 @@ esac
 # application specific configuration
 case $1 in
   puma|rails )
-    rake db:migrate --trace
-    rake assets:precompile --trace
+    gosu worker rake db:migrate --trace
+    gosu worker rake assets:precompile --trace
     ;;
   bundle )
     exec "$@"
