@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       log_in user   # Log the user in
       params[:session][:remember_me] == '1' ? remember(user) : forget(user) # Remember the logged in user if box is checked
-      redirect_to user # redirect to the user's show page
+      redirect_back_or user # redirect to the requested URL if it exists, or some default URL otherwise
     else
       flash.now[:danger] = 'Invalid email/password combination'
       render 'new'
