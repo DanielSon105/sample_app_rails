@@ -11,6 +11,7 @@ services:
     depends_on:
       - postgres
     environment:
+      RAILS_ENV: development
       SAMPLE_APP_DB_HOST: postgres
       SAMPLE_APP_DB_USER: user
       SAMPLE_APP_DB_PASSWORD: password

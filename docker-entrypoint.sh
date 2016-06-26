@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 check_group() {
   target_gid=$(stat -c "%g" "$1")
