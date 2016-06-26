@@ -19,6 +19,11 @@ case $RAILS_ENV in
     bundle config --global frozen 0
     bundle check || bundle install
     ;;
+  staging|production )
+    ;;
+  * )
+    printf 'Unknown RAILS_ENV value: %s\n' "${RAILS_ENV:-empty}"
+    ;;
 esac
 
 # application specific configuration
