@@ -1,28 +1,21 @@
 #!/usr/bin/env bash
 set -e
-check_user_for() {
-  owner_user='1000'
-  owner_group='1000'
-  worker_user=$(id -u worker)
-  worker_group=$(id -g worker)
-  if [ "$owner_user" -ne "$worker_user" -o "$owner_group" -ne "$worker_group" ]; then
-    deluser 'worker'
-    groupadd --gid "$owner_group" --system worker
-    useradd --uid "$owner_user" --gid "$owner_group" --shell /bin/false \
-      --home-dir /nonexistent --system worker
+
+check_group() {
+  target_gid=$(stat -c "%g" "$1")
+  if [ "$(grep "$target_gid" -c /etc/group)" -eq "0" ]; then
+    groupadd -g "$target_gid" localworker
+    usermod -a -G localworker worker
+  else
+    group=$(getent group "$target_gid" | cut -d: -f1)
+    usermod -a -G "$group" worker
   fi
 }
-
-# check if rails_env variable is set, otherwise use development
-if [ -z "$RAILS_ENV" ]; then
-  printf "Warning!\n  Variable RAILS_ENV is not set!\n  Using: development\n"
-  export RAILS_ENV='development'
-fi
 
 # environment specific configuration
 case $RAILS_ENV in
   development|test )
-    check_user_for .
+    check_group .
     bundle config --global frozen 0
     bundle check || bundle install
     ;;
@@ -39,5 +32,4 @@ case $1 in
     ;;
 esac
 
-chown -R worker:worker .
 exec gosu worker "$@"

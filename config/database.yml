@@ -11,7 +11,7 @@ default: &default
   adapter: postgresql
   host:     <%= ENV['SAMPLE_APP_DB_HOST'] || 'localhost' %>
   port:     <%= ENV['SAMPLE_APP_DB_PORT'] || '5432' %>
-  database: <%= ENV['SAMPLE_APP_DB_NAME'] %>
+  database: <%= ENV['SAMPLE_APP_DB_NAME'] || 'app_database' %>
   username: <%= ENV['SAMPLE_APP_DB_USER'] %>
   password: <%= ENV['SAMPLE_APP_DB_PASSWORD'] %>
 
@@ -23,6 +23,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  database: <%= ENV['SAMPLE_APP_TEST_DB_NANE'] || 'app_test_database' %>
 
 production:
   <<: *default
