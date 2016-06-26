@@ -28,7 +28,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: database
+      PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_APP_DB: app_database
       POSTGRES_APP_TEST_DB: app_test_database
 

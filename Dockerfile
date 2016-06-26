@@ -32,19 +32,6 @@ RUN bundle config --global frozen 0
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# install required gems from gemfile
-# comment out while bootstrapping app
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
-RUN bundle install
-
-# copy the code
-COPY . /usr/src/app
-
-# default command
-ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["bin/rails", "server", "-b", "0.0.0.0"]
-
 # install gosu
 ENV GOSU_VERSION '1.9'
 ENV GOSU_GPG_KEY 'B42F6819007F00F88E364FD4036A9C25BF357DD4'
@@ -63,3 +50,16 @@ RUN set -ex \
 RUN set -ex \
     && groupadd --gid 118 --system worker \
     && useradd --uid 118 --gid 118 --shell /bin/false --home-dir /nonexistent --system worker
+
+# default command
+ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
+
+# install required gems from gemfile
+# comment out while bootstrapping app
+COPY Gemfile /usr/src/app/
+COPY Gemfile.lock /usr/src/app/
+RUN bundle install
+
+# copy the code
+COPY . /usr/src/app
