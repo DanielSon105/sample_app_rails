@@ -5,10 +5,10 @@ check_group() {
   target_gid=$(stat -c "%g" "$1")
   if [ "$(grep "$target_gid" -c /etc/group)" -eq "0" ]; then
     groupadd -g "$target_gid" localworker
-    usermod -a -G localworker worker
+    usermod -g localworker worker
   else
     group=$(getent group "$target_gid" | cut -d: -f1)
-    usermod -a -G "$group" worker
+    usermod -g "$group" worker
   fi
 }
 
