@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -e
 
 check_group() {
   target_gid=$(stat -c "%g" "$1")
@@ -19,10 +19,18 @@ check_group() {
 
 # environment specific configuration
 case $RAILS_ENV in
-  development|test )
+  development )
+    set -x
     check_group .
     bundle config --global frozen 0
     bundle check || bundle install
+    ;;
+  test )
+    set -x
+    check_group .
+    bundle config --global frozen 0
+    bundle check || bundle install
+    rake db:create db:schema:load --trace
     ;;
   staging|production )
     ;;
